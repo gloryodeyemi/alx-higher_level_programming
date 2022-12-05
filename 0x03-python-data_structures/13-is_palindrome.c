@@ -1,44 +1,50 @@
-#include <stdio.h>
-#include <stdlib.h>
+
+
 #include "lists.h"
 
-int len_list(listint_t *head)
-{
-	int i = 0;
-	listint_t *h = head;
-
-	while (head != NULL)
-	{
-		h = h->next;
-		i++;
-	}
-	return (i);
-}
-
 /**
- * is_palindrome - checks if a singly linked list is a palindrome.
- * @head: singly linked list.
- * Return: 0 if it is not a palindrome, 1 if it is a palindrome.
+ * is_palindrome - tests if linked lists is palindrome
+ * @head: address of pointer to list
+ * Return: 1 is palindrome else 0
  */
 int is_palindrome(listint_t **head)
 {
-	int a, i;
-	listint_t *tmp = *head;
-	int array;
+	listint_t *slow = *head, *fast = *head, *node, *prev;
+	int failed = 0;
 
-	l = len_list(*head);
-	array = malloc(sizeof(int) * l);
-
-	if (array == NULL)
-	        exit(-1);
-
-	i = 0;
-	while (temp != NULL)
+	while (fast != NULL && fast->next != NULL)
 	{
-		array[i] = temp->n;
-		temp = temp->next;
-		i++;
+		fast = fast->next->next;
+		slow = slow->next;
 	}
-
-	
+	node = slow;
+	prev = NULL;
+	while (node)
+	{
+		fast = node->next;
+		node->next = prev;
+		prev = node;
+		node = fast;
+	}
+	fast = *head;
+	node = prev;
+	while (prev)
+	{
+		if (fast->n != prev->n)
+		{
+			failed = 1;
+			break;
+		}
+		fast = fast->next;
+		prev = prev->next;
+	}
+	prev = NULL;
+	while (node)
+	{
+		fast = node->next;
+		node->next = prev;
+		prev = node;
+		node = fast;
+	}
+	return (!failed);
 }
