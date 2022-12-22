@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 class Node:
     def __init__(self, data, next_node=None):
-        self.data = data
-        self.next_node = next_node
+        if not isinstance(data, int):
+            raise TypeError("data must be an integer")
+        self.__data = data
+        if not isinstance(next_node, Node) and next_node is not None:
+            raise TypeError("next_node must be a Node object")
+        self.__next_node = next_node
 
     @property
     def data(self):
@@ -11,7 +15,7 @@ class Node:
     @data.setter
     def data(self, value):
         if not isinstance(value, int):
-            raise TypeError('data must be an integer')
+            raise TypeError("data must be an integer")
         self.__data = value
 
     @property
@@ -20,37 +24,20 @@ class Node:
 
     @next_node.setter
     def next_node(self, value):
-        if value is not None and type(value) != Node:
-            raise TypeError('next_node must be a Node object')
-        self.__next_node = value
-
+        if not isinstance(value, Node) and next_node is not None:
+            raise TypeError("next_node must be a Node object")
+        self.__data = value
 
 class SinglyLinkedList:
+    linked_list = []
     def __init__(self):
-        self.head = None
-
-    def __str__(self):
-        ret = ""
-        node = self.head
-        while node:
-            ret += str(node.data) + "\n"
-            node = node.next_node
-        return ret[:-1]
+        pass
 
     def sorted_insert(self, value):
-        new = Node(value)
-        if not self.head:
-            self.head = new
-            return
+        new_node = Node(value)
+        self.linked_list.append(Node.data)
+        sorted_list = self.linked_list.sort()
 
-        if value < self.head.data:
-            new.next_node = self.head
-            self.head = new
-            return
-
-        node = self.head
-        while node.next_node and node.next_node.data < value:
-            node = node.next_node
-        if node.next_node:
-            new.next_node = node.next_node
-        node.next_node = new
+    def __str__(self):
+        for i in self.sorted_list:
+            print(i)
